@@ -128,11 +128,14 @@ public class UIMainManager : MonoBehaviour
         m_gameManager.isNormaal = !m_gameManager.isNormaal;
     }
     internal void RestartLevel()
-    { 
+    {
+
+        m_gameManager.ClearLevel();
         if (isTimer)
         {
+           
             m_gameManager.LoadLevel(GameManager.eLevelMode.TIMER);
-
+     
         }
         else
         {

@@ -57,8 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\eSwipeDirection.cs" />
+    <Compile Include="Assets\Scripts\Board\FishItem.cs" />
     <Compile Include="Assets\Scripts\Board\Board.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\Resources\ScriptableObjects\ConfigScrtbObj.cs" />
     <Compile Include="Assets\Scripts\UI\UIPanelMain.cs" />
     <Compile Include="Assets\Scripts\UI\UIMainManager.cs" />
     <Compile Include="Assets\Scripts\Board\BonusItem.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\Controllers\LevelCondition.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\Scripts\UI\UIBtnNormal.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameManager.cs" />
@@ -84,9 +87,6 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\Scripts\UI\UIPanelGame.cs" />
     <Compile Include="Assets\Scripts\Board\Item.cs" />
-    <Compile Include="Assets\Resources\ScriptableObjects\ConfigScrtbObj.cs" />
-    <Compile Include="Assets\Scripts\Board\FishItem.cs" />
-    <Compile Include="Assets\Scripts\UI\UIBtnNormal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
