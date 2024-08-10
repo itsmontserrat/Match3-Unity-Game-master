@@ -7,7 +7,6 @@ public class NormalItem : Item
 {
     public NormalItem(GameManager gameManager)
     {
-
         this.GameManager = gameManager; 
     }
 

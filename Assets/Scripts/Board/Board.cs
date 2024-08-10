@@ -27,6 +27,9 @@ public class Board
 
     private GameManager GameManager;
 
+    private Dictionary<NormalItem.eNormalType, Int32> norNumber = new Dictionary<NormalItem.eNormalType, int>();
+
+    private Dictionary<FishItem.eFishType, Int32> fishNumber = new Dictionary<FishItem.eFishType, int>();
 
     public Board(Transform transform, GameSettings gameSettings, GameManager gameManager)
     {
@@ -104,12 +107,20 @@ public class Board
                             types.Add(nitem.ItemType);
                         }
                     }
-
+                    
                     item.SetType(Utils.GetRandomNormalTypeExcept(types.ToArray()));
                     item.SetView();
                     item.SetViewRoot(m_root);
                     cell.Assign(item);
                     cell.ApplyItemPosition(false);
+                    if(norNumber.ContainsKey(item.ItemType))
+                    {
+                        norNumber[item.ItemType]++;
+                    }
+                    else
+                    {
+                        norNumber.Add(item.ItemType, 1);
+                    }
                 }
                 else
                 {
@@ -135,7 +146,131 @@ public class Board
                     item.SetView();
                     item.SetViewRoot(m_root);
                     cell.Assign(item);
-                    cell.ApplyItemPosition(false);
+                    if (fishNumber.ContainsKey(item.ItemType))
+                    {
+                        fishNumber[item.ItemType]++;
+                    }
+                    else
+                    {
+                        fishNumber.Add(item.ItemType, 1);
+                    }
+                }
+                
+            }
+        }
+    }
+
+    internal void FillGapsWithNewItems()
+    {
+        for (int x = 0; x < boardSizeX; x++)
+        {
+            for (int y = 0; y < boardSizeY; y++)
+            {
+                Cell cell = m_cells[x, y];
+                if (!cell.IsEmpty) continue;
+                if (GameManager.isNormaal)
+                {
+                    NormalItem item = new NormalItem(GameManager);
+                    List<NormalItem.eNormalType> types = new List<NormalItem.eNormalType>();
+                    if (cell.NeighbourBottom != null)
+                    {
+                        NormalItem nitem = cell.NeighbourBottom.Item as NormalItem;
+                        if (nitem != null)
+                        {
+                            types.Add(nitem.ItemType);
+                        }
+                    }
+
+                    if (cell.NeighbourLeft != null)
+                    {
+                        NormalItem nitem = cell.NeighbourLeft.Item as NormalItem;
+                        if (nitem != null)
+                        {
+                            types.Add(nitem.ItemType);
+                        }
+                    }
+                    if (cell.NeighbourRight != null)
+                    {
+                        NormalItem nitem = cell.NeighbourRight.Item as NormalItem;
+                        if (nitem != null)
+                        {
+                            types.Add(nitem.ItemType);
+                        }
+                    }
+                    if (cell.NeighbourUp != null)
+                    {
+                        NormalItem nitem = cell.NeighbourUp.Item as NormalItem;
+                        if (nitem != null)
+                        {
+                            types.Add(nitem.ItemType);
+                        }
+                    }
+                    item.SetType(Utils.GetRandomNormalTypeExceptOrder(types.ToArray(), norNumber));
+                    item.SetView();
+                    item.SetViewRoot(m_root);
+
+                    cell.Assign(item);
+                    cell.ApplyItemPosition(true);
+                    if (norNumber.ContainsKey(item.ItemType))
+                    {
+                        norNumber[item.ItemType]++;
+                    }
+                    else
+                    {
+                        norNumber.Add(item.ItemType, 1);
+                    }
+                }
+                else
+                {
+                    FishItem item = new FishItem(GameManager);
+                    List<FishItem.eFishType> types = new List<FishItem.eFishType>();
+                    if (cell.NeighbourBottom != null)
+                    {
+                        FishItem fitem = cell.NeighbourBottom.Item as FishItem;
+                        if (fitem != null)
+                        {
+                            types.Add(fitem.ItemType);
+                        }
+                    }
+                    if (cell.NeighbourLeft != null)
+                    {
+                        FishItem fitem = cell.NeighbourLeft.Item as FishItem;
+                        if (fitem != null)
+                        {
+                            types.Add(fitem.ItemType);
+                        }
+                    }
+                    if (cell.NeighbourRight != null)
+                    {
+                        FishItem fitem = cell.NeighbourRight.Item as FishItem;
+                        if (fitem != null)
+                        {
+                            types.Add(fitem.ItemType);
+                        }
+                    }
+                    if (cell.NeighbourUp != null)
+                    {
+                        FishItem fitem = cell.NeighbourUp.Item as FishItem;
+                        if (fitem != null)
+                        {
+                            types.Add(fitem.ItemType);
+                        }
+                    }
+
+                    item.SetType(Utils.GetRandomFishTypeExceptOrder(types.ToArray(), fishNumber));
+                    item.SetView();
+                    item.SetViewRoot(m_root);
+                    cell.Assign(item);
+                    cell.ApplyItemPosition(true);
+                    
+                    if (fishNumber.ContainsKey(item.ItemType))
+                    {
+                        fishNumber[item.ItemType]++;
+                    }
+                    else
+                    {
+                        fishNumber.Add(item.ItemType, 1);
+                    }
                 }
             }
         }
@@ -166,27 +301,7 @@ public class Board
         }
     }
 
-
-    internal void FillGapsWithNewItems()
-    {
-        for (int x = 0; x < boardSizeX; x++)
-        {
-            for (int y = 0; y < boardSizeY; y++)
-            {
-                Cell cell = m_cells[x, y];
-                if (!cell.IsEmpty) continue;
-
-                NormalItem item = new NormalItem(GameManager);
-
-                item.SetType(Utils.GetRandomNormalType());
-                item.SetView();
-                item.SetViewRoot(m_root);
-
-                cell.Assign(item);
-                cell.ApplyItemPosition(true);
-            }
-        }
-    }
+   
 
     internal void ExplodeAllItems()
     {
@@ -371,6 +486,12 @@ public class Board
                     break;
                 }
             }
+        }
+
+        Item matchItem = null;
+        if (list.Count > 0)
+        {
+            matchItem = list[0].Item;
         }
 
         return list;
