@@ -88,7 +88,6 @@ public class Board
                 if (GameManager.isNormaal)
                 {
                     NormalItem item = new NormalItem(GameManager);
-
                     List<NormalItem.eNormalType> types = new List<NormalItem.eNormalType>();
                     if (cell.NeighbourBottom != null)
                     {
@@ -146,6 +145,7 @@ public class Board
                     item.SetView();
                     item.SetViewRoot(m_root);
                     cell.Assign(item);
+                    cell.ApplyItemPosition(false);
                     if (fishNumber.ContainsKey(item.ItemType))
                     {
                         fishNumber[item.ItemType]++;

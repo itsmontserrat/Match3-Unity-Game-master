@@ -129,7 +129,6 @@ public class UIMainManager : MonoBehaviour
     }
     internal void RestartLevel()
     {
-
         m_gameManager.ClearLevel();
         if (isTimer)
         {

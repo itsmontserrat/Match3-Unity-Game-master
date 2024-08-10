@@ -23,8 +23,12 @@ public class Item
             prefab.GetComponent<SpriteRenderer>().sprite = prefabSprite;
             if (prefab)
             {
-                View = GameObject.Instantiate(prefab).transform;
-            }
+            GameObject gameObject = PoolManager.Spawn(prefab);
+            if (gameObject)
+                View = gameObject.transform;
+            else
+                View = null;
+        }
        
     }
 
@@ -134,7 +138,7 @@ public class Item
 
         if (View)
         {
-            GameObject.Destroy(View.gameObject);
+            PoolManager.Despawn(View.gameObject);
             View = null;
         }
     }

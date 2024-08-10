@@ -87,6 +87,7 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\Scripts\UI\UIPanelGame.cs" />
     <Compile Include="Assets\Scripts\Board\Item.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PoolManaager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
