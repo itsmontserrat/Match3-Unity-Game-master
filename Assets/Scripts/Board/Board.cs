@@ -462,39 +462,38 @@ public class Board
         return eMatchDirection.NONE;
     }
 
-    internal List<Cell> FindFirstMatch()
+    public List<Cell> FindFirstMatch()
     {
-        List<Cell> list = new List<Cell>();
+        Dictionary<(int, int), Cell> matches = new Dictionary<(int, int), Cell>();
 
         for (int x = 0; x < boardSizeX; x++)
         {
             for (int y = 0; y < boardSizeY; y++)
             {
                 Cell cell = m_cells[x, y];
+                if (matches.ContainsKey((x, y))) continue;
 
                 var listhor = GetHorizontalMatches(cell);
                 if (listhor.Count >= m_matchMin)
                 {
-                    list = listhor;
-                    break;
+                    foreach (var match in listhor)
+                    {
+                        matches[(match.BoardX, match.BoardY)] = match;
+                    }
                 }
 
                 var listvert = GetVerticalMatches(cell);
                 if (listvert.Count >= m_matchMin)
                 {
-                    list = listvert;
-                    break;
+                    foreach (var match in listvert)
+                    {
+                        matches[(match.BoardX, match.BoardY)] = match;
+                    }
                 }
             }
         }
 
-        Item matchItem = null;
-        if (list.Count > 0)
-        {
-            matchItem = list[0].Item;
-        }
-
-        return list;
+        return matches.Values.ToList();
     }
 
     public List<Cell> CheckBonusIfCompatible(List<Cell> matches)
